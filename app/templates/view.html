@@ -2,20 +2,17 @@
 {% block content %}
 
 <div class="card" class="m-5 p-2">
-    <h5 class="card-title">{{ city.fldName }} - {{ city.fldAbbreviation }}</h5>
+    <h5 class="card-title">{{ person.Id }}</h5>
 
     <ul class="list-group list-group-flush">
-        <li class="list-group-item">Latitude: {{ city.fldLat }}</li>
-        <li class="list-group-item">Longitude: {{ city.fldLong }}</li>
-        <li class="list-group-item">Capital: {{ city.fldCapitalStatus }}</li>
-        <li class="list-group-item">Country: {{ city.fldCountry }}</li>
-        <li class="list-group-item">Population: {{ city.fldPopulation }}</li>
+        <li class="list-group-item">Height: {{ person.Height }}</li>
+        <li class="list-group-item">Weight: {{ person.Weight }}</li>
     </ul>
     <div class="card-body">
-        <a href="/edit/{{city.id}}" class="card-link btn btn-primary">edit</a>
+        <a href="/edit/{{person.Id}}" class="card-link btn btn-primary">edit</a>
     </div>
 </div>
-<form action="/delete/{{city.id}}" method="post"><button type="submit" class="btn btn-danger">Delete</button></form>
+<form action="/delete/{{person.Id}}" method="post"><button type="submit" class="btn btn-danger">Delete</button></form>
 
 
 {% endblock %}
