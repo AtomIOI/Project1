@@ -50,12 +50,12 @@ def form_update_post(person_id):
     return redirect("/", code=302)
 
 
-@app.route('/cities/new', methods=['GET'])
+@app.route('/person/new', methods=['GET'])
 def form_insert_get():
     return render_template('new.html', title='New Person Form')
 
 
-@app.route('/cities/new', methods=['POST'])
+@app.route('/person/new', methods=['POST'])
 def form_insert_post():
     cursor = mysql.get_db().cursor()
     inputData = (request.form.get('fldid'), request.form.get('fldheight'), request.form.get('fldweight'))
@@ -65,19 +65,19 @@ def form_insert_post():
     return redirect("/", code=302)
 
 
-@app.route('/delete/<int:city_id>', methods=['POST'])
-def form_delete_post(city_id):
+@app.route('/delete/<int:person_id>', methods=['POST'])
+def form_delete_post(person_id):
     cursor = mysql.get_db().cursor()
-    sql_delete_query = """DELETE FROM tblCitiesImport WHERE id = %s """
-    cursor.execute(sql_delete_query, city_id)
+    sql_delete_query = """DELETE FROM measurements WHERE id = %s """
+    cursor.execute(sql_delete_query, person_id)
     mysql.get_db().commit()
     return redirect("/", code=302)
 
 
-@app.route('/api/v1/cities', methods=['GET'])
+@app.route('/api/persons', methods=['GET'])
 def api_browse() -> str:
     cursor = mysql.get_db().cursor()
-    cursor.execute('SELECT * FROM tblCitiesImport')
+    cursor.execute('SELECT * FROM measurements')
     result = cursor.fetchall()
     json_result = json.dumps(result);
     resp = Response(json_result, status=200, mimetype='application/json')
