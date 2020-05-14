@@ -40,33 +40,30 @@ def form_edit_get(person_id):
     return render_template('edit.html', title='Edit Form', person=result[0])
 
 
-@app.route('/edit/<int:city_id>', methods=['POST'])
-def form_update_post(city_id):
+@app.route('/edit/<int:person_id>', methods=['POST'])
+def form_update_post(person_id):
     cursor = mysql.get_db().cursor()
-    inputData = (request.form.get('fldName'), request.form.get('fldLat'), request.form.get('fldLong'),
-                 request.form.get('fldCountry'), request.form.get('fldAbbreviation'),
-                 request.form.get('fldCapitalStatus'), request.form.get('fldPopulation'), city_id)
-    sql_update_query = """UPDATE tblCitiesImport t SET t.fldName = %s, t.fldLat = %s, t.fldLong = %s, t.fldCountry = 
-    %s, t.fldAbbreviation = %s, t.fldCapitalStatus = %s, t.fldPopulation = %s WHERE t.id = %s """
+    inputData = (request.form.get('fldheight'), request.form.get('fldweight'), person_id)
+    sql_update_query = """UPDATE measurements t SET t.Height = %s, t.Weight = %s WHERE t.id = %s """
     cursor.execute(sql_update_query, inputData)
     mysql.get_db().commit()
     return redirect("/", code=302)
 
+
 @app.route('/cities/new', methods=['GET'])
 def form_insert_get():
-    return render_template('new.html', title='New City Form')
+    return render_template('new.html', title='New Person Form')
 
 
 @app.route('/cities/new', methods=['POST'])
 def form_insert_post():
     cursor = mysql.get_db().cursor()
-    inputData = (request.form.get('fldName'), request.form.get('fldLat'), request.form.get('fldLong'),
-                 request.form.get('fldCountry'), request.form.get('fldAbbreviation'),
-                 request.form.get('fldCapitalStatus'), request.form.get('fldPopulation'))
-    sql_insert_query = """INSERT INTO tblCitiesImport (fldName,fldLat,fldLong,fldCountry,fldAbbreviation,fldCapitalStatus,fldPopulation) VALUES (%s, %s,%s, %s,%s, %s,%s) """
+    inputData = (request.form.get('fldid'), request.form.get('fldheight'), request.form.get('fldweight'))
+    sql_insert_query = """INSERT INTO measurements (Id,Height,Weight) VALUES (%s, %s,%s) """
     cursor.execute(sql_insert_query, inputData)
     mysql.get_db().commit()
     return redirect("/", code=302)
+
 
 @app.route('/delete/<int:city_id>', methods=['POST'])
 def form_delete_post(city_id):
